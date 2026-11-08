@@ -291,7 +291,8 @@ function populateAirportSelects(list) {
     list.forEach(a => {
       const opt = document.createElement('option');
       opt.value = a.code;
-      opt.textContent = `${a.city} (${a.code}) - ${a.name}`;
+      opt.textContent = `${a.city} (${a.code})`;
+      opt.title = `${a.name}, ${a.country}`;
       sel.appendChild(opt);
     });
     if (currentVal) sel.value = currentVal;
