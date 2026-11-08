@@ -1614,3 +1614,361 @@ ul { list-style: none; }
   .booking-form-card, .booking-summary { padding: 1.5rem; }
   .confirmation-card { padding: 2rem; }
 }
+
+
+/* === Interactive Airplane Seat Map === */
+.seat-map-wrapper {
+  background: #0f172a;
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  color: white;
+  margin: 1.5rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.airplane-fuselage {
+  max-width: 440px;
+  margin: 0 auto;
+  background: #1e293b;
+  border-radius: 90px 90px 24px 24px;
+  border: 3px solid rgba(255,255,255,0.12);
+  padding: 2.5rem 1.5rem 1.5rem;
+  position: relative;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.4);
+}
+
+.cockpit-view {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px dashed rgba(255,255,255,0.1);
+}
+
+.cockpit-icon {
+  font-size: 2.2rem;
+  display: block;
+}
+
+.cockpit-text {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-light);
+}
+
+.cabin-section-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-light);
+  margin: 1.2rem 0 0.6rem;
+  text-align: center;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.row-num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-light);
+  width: 22px;
+  text-align: center;
+}
+
+.seat-group {
+  display: flex;
+  gap: 6px;
+}
+
+.seat-aisle {
+  width: 20px;
+}
+
+.airplane-seat {
+  width: 34px;
+  height: 36px;
+  border-radius: 8px 8px 4px 4px;
+  background: #334155;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #cbd5e1;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.airplane-seat:hover:not(.occupied) {
+  background: #3b82f6;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+}
+
+.airplane-seat.selected {
+  background: #f97316 !important;
+  color: white !important;
+  border-color: #ea580c !important;
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.6);
+}
+
+.airplane-seat.occupied {
+  background: #1e293b;
+  color: #475569;
+  border-color: rgba(255,255,255,0.05);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.seat-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.legend-swatch.avail { background: #334155; }
+.legend-swatch.sel { background: #f97316; }
+.legend-swatch.occ { background: #1e293b; border: 1px solid #475569; }
+
+/* === Boarding Pass === */
+.boarding-pass-card {
+  max-width: 680px;
+  margin: 2rem auto;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  position: relative;
+}
+
+.boarding-pass-header {
+  background: linear-gradient(135deg, #1e3a5f, #0f2744);
+  color: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.boarding-pass-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.boarding-pass-brand h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.boarding-pass-class {
+  background: rgba(249, 115, 22, 0.2);
+  border: 1px solid #f97316;
+  color: #fb923c;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.boarding-pass-body {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  position: relative;
+}
+
+.boarding-pass-body::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: calc(33.333% + 1rem);
+  border-left: 2px dashed #cbd5e1;
+}
+
+.boarding-flight-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.boarding-airport h4 {
+  font-size: 2.2rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--primary);
+  margin: 0;
+}
+
+.boarding-airport p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.boarding-plane-icon {
+  font-size: 1.8rem;
+  color: var(--accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.boarding-plane-icon span {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.boarding-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+.boarding-info-item label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.boarding-info-item span {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.boarding-pass-stub {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.stub-qr {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.stub-qr-icon {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.boarding-barcode {
+  background: #f1f5f9;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e2e8f0;
+}
+
+.barcode-strip {
+  font-family: monospace;
+  letter-spacing: 5px;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #334155;
+}
+
+.print-pass-btn {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  padding: 0.8rem 1.6rem;
+  border-radius: 30px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.print-pass-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5);
+}
+
+/* Quick Fill Demo Credentials */
+.demo-login-box {
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.demo-login-box span {
+  font-size: 0.85rem;
+  color: #1e3a5f;
+  font-weight: 600;
+}
+
+.btn-demo-fill {
+  background: #3b82f6;
+  color: white;
+  font-size: 0.75rem;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-demo-fill:hover {
+  background: #2563eb;
+}

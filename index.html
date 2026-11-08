@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SkyWay ✈️ Premium Flight Booking</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="./public/css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
 </head>
 <body>
@@ -42,6 +43,13 @@
       <button class="modal-close" onclick="hideModal('loginModal')">✕</button>
       <h2>Welcome Back ✈️</h2>
       <p>Sign in to access your bookings and manage your trips.</p>
+
+      <!-- 1-Click Demo Login Box -->
+      <div class="demo-login-box">
+        <span>⚡ Demo Account: admin@skyway.com</span>
+        <button type="button" class="btn-demo-fill" onclick="fillDemoCredentials()">1-Click Fill</button>
+      </div>
+
       <form onsubmit="handleLogin(event)">
         <div class="form-group dark-label">
           <label>Email Address</label>
@@ -52,6 +60,7 @@
           <input type="password" class="form-control light" id="loginPassword" placeholder="Enter password" required>
         </div>
         <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginBtn">Sign In</button>
+        <button type="button" class="btn btn-ghost btn-block" style="margin-top: 10px;" onclick="continueAsGuest()">Continue as Guest 👤</button>
       </form>
       <div class="auth-switch">
         Don't have an account? <a onclick="hideModal('loginModal'); showModal('registerModal')">Sign up</a>
@@ -96,6 +105,55 @@
     </div>
   </div>
 
+  <!-- Interactive Airplane Seat Selection Modal -->
+  <div class="modal-overlay" id="seatModal">
+    <div class="modal" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close" onclick="hideModal('seatModal')">✕</button>
+      <h2>💺 Choose Your Seat</h2>
+      <p id="seatModalSubtitle">Select seats for all passengers</p>
+
+      <div class="seat-map-wrapper">
+        <div class="airplane-fuselage">
+          <div class="cockpit-view">
+            <span class="cockpit-icon">✈️</span>
+            <span class="cockpit-text">Front of Aircraft • Cockpit</span>
+          </div>
+
+          <div class="cabin-section-title">First & Business Class</div>
+          <div id="firstClassSeats"></div>
+
+          <div class="cabin-section-title">Main Cabin • Economy</div>
+          <div id="economyClassSeats"></div>
+        </div>
+
+        <div class="seat-legend">
+          <div class="legend-item"><div class="legend-swatch avail"></div> Available</div>
+          <div class="legend-item"><div class="legend-swatch sel"></div> Selected</div>
+          <div class="legend-item"><div class="legend-swatch occ"></div> Occupied</div>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+        <div>
+          <strong>Selected Seat(s):</strong>
+          <span id="selectedSeatsLabel" style="color: var(--accent); font-weight: 700; margin-left: 8px;">Auto-assigned</span>
+        </div>
+        <button class="btn btn-primary" onclick="confirmSeatSelection()">Confirm Seats →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boarding Pass Ticket Modal -->
+  <div class="modal-overlay" id="boardingPassModal">
+    <div class="modal" style="max-width: 760px; max-height: 95vh; overflow-y: auto; background: #f8fafc;">
+      <button class="modal-close" onclick="hideModal('boardingPassModal')">✕</button>
+      <div id="boardingPassContainer"></div>
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <button class="print-pass-btn" onclick="window.print()">🖨️ Print / Download Boarding Pass</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ HOME PAGE ============ -->
   <div class="page active" id="page-home">
     <!-- Hero Section -->
@@ -109,8 +167,8 @@
         <!-- Search Box -->
         <div class="search-box">
           <div class="search-tabs">
-            <button class="search-tab active">✈️ One Way</button>
-            <button class="search-tab">🔄 Round Trip</button>
+            <button class="search-tab active" onclick="setTripType('oneway', this)">✈️ One Way</button>
+            <button class="search-tab" onclick="setTripType('roundtrip', this)">🔄 Round Trip</button>
           </div>
           <form class="search-form" onsubmit="searchFlights(event)">
             <div class="form-group">
@@ -128,6 +186,10 @@
             <div class="form-group">
               <label>Departure</label>
               <input type="date" class="form-control" id="searchDate" required>
+            </div>
+            <div class="form-group" id="returnDateGroup" style="display:none;">
+              <label>Return</label>
+              <input type="date" class="form-control" id="searchReturnDate">
             </div>
             <div class="form-group">
               <label>Passengers</label>
@@ -303,7 +365,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2024 SkyWay Airlines. All rights reserved.</span>
+        <span>© 2026 SkyWay Airlines. All rights reserved.</span>
         <span>Made with ❤️ for travelers</span>
       </div>
     </footer>
@@ -428,6 +490,8 @@
     </div>
   </div>
 
-  <script src="/js/app.js"></script>
+  <script src="./public/js/app.js"></script>
+  <script src="./js/app.js"></script>
 </body>
 </html>
+
